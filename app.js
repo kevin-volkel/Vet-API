@@ -15,7 +15,9 @@ const cors = require('cors')
 
 //! Routes
 // const authRouter = require('./routes/auth')
-// const jobsRouter = require('./routes/jobs')
+// const petsRouter = require('./routes/pets')
+// const requestRouter = require('./routes/requests')
+// const adoptedRouter = require('./routes/adopted')
 
 //! Middleware
 // const auth = require('./middleware/auth')
@@ -25,7 +27,7 @@ const cors = require('cors')
 //! SwaggerUI
 // const swaggerUI = require('swagger-ui-express')
 // const YAML = require('yamljs')
-// const swaggerDocs = YAML.load('./swagger.yaml')
+// const swaggerDocs = YAML.load('./swagger.yaml ')
 
 //! Variable Declaration
 const port = process.env.PORT || 3000
@@ -47,10 +49,10 @@ app
     res.send('<h1> Welcome to the site </h1>')
   }) 
   // .use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
-  // .use('/api/v1/auth', authRouter)
-  // .use('/api/v1/users', userRouter)
-  // .use('/api/v1/pets', petsRouter)
-  // .use('/api/v1/adopted', adoptedRouter)
+  .use('/api/v1/auth', authRouter)
+  .use('/api/v1/requests', requestsRouter)
+  .use('/api/v1/pets', petsRouter)
+  .use('/api/v1/adopted', adoptedRouter)
   // .use(notFound)
   // .use(errorHandler)
 
