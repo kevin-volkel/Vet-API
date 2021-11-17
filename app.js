@@ -5,7 +5,7 @@ require('dotenv').config()
 //! App Cores
 const express = require('express')
 const app = express();
-// const connectDB = require('./db/connect')
+const connectDB = require('./db/connect')
 
 //! Extra Secutiry
 const rateLimiter = require('express-rate-limit')
@@ -40,27 +40,27 @@ app
     })
   )
   .use([express.urlencoded({ extended: false }), express.json()])
-  .use(hemlet())
+  .use(helmet())
   .use(cors())
   .use(xss())
   .get('/', (req, res) => {
     res.send('<h1> Welcome to the site </h1>')
   }) 
   // .use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
-  .use('/api/v1/auth', authRouter)
-  .use('/api/v1/users', userRouter)
-  .use('/api/v1/pets', petsRouter)
-  .use('/api/v1/adopted', adoptedRouter)
+  // .use('/api/v1/auth', authRouter)
+  // .use('/api/v1/users', userRouter)
+  // .use('/api/v1/pets', petsRouter)
+  // .use('/api/v1/adopted', adoptedRouter)
   // .use(notFound)
   // .use(errorHandler)
 
 const startServer = async () => {
   try{
-    // await connectDB(process.env.MONGO_URL);
+    await connectDB(process.env.MONGO_URL);
     app.listen(port, () => console.log(`app is now listeing at port ${port}`))
   } catch (err) {
     console.error(err);
   }
 }
 
-// startServer();
+startServer();
