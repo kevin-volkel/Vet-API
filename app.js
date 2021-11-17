@@ -1,21 +1,23 @@
 //! Environment Setup
-require('express-async-errors')
-require('dotenv').config()
+require('express-async-errors');
+require('dotenv').config();
 
 //! App Cores
-const express = require('express')
+const express = require('express');
 const app = express();
-const connectDB = require('./db/connect')
+const connectDB = require('./db/connect');
 
 //! Extra Secutiry
-const rateLimiter = require('express-rate-limit')
-const helmet = require('helmet')
-const xss = require('xss-clean')
-const cors = require('cors')
+const rateLimiter = require('express-rate-limit');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const cors = require('cors');
 
 //! Routes
-// const authRouter = require('./routes/auth')
-// const jobsRouter = require('./routes/jobs')
+const authRouter = require('./routes/auth');
+const petsRouter = require('./routes/pets');
+const requestsRouter = require('./routes/request');
+const adoptedRouter = require('./routes/adopted');
 
 //! Middleware
 // const auth = require('./middleware/auth')
@@ -28,7 +30,7 @@ const cors = require('cors')
 // const swaggerDocs = YAML.load('./swagger.yaml')
 
 //! Variable Declaration
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 const minutes = 1000 * 60;
 
 app
@@ -36,7 +38,7 @@ app
   .use(
     rateLimiter({
       windowMs: 15 * minutes,
-      max: 100
+      max: 100,
     })
   )
   .use([express.urlencoded({ extended: false }), express.json()])
@@ -44,23 +46,23 @@ app
   .use(cors())
   .use(xss())
   .get('/', (req, res) => {
-    res.send('<h1> Welcome to the site </h1>')
-  }) 
+    res.send('<h1> Welcome to the site </h1>');
+  })
   // .use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
-  // .use('/api/v1/auth', authRouter)
-  // .use('/api/v1/users', userRouter)
-  // .use('/api/v1/pets', petsRouter)
-  // .use('/api/v1/adopted', adoptedRouter)
-  // .use(notFound)
-  // .use(errorHandler)
+  .use('/api/v1/auth', authRouter)
+  .use('/api/v1/requests', requestsRouter)
+  .use('/api/v1/pets', petsRouter)
+  .use('/api/v1/adopted', adoptedRouter);
+// .use(notFound)
+// .use(errorHandler)
 
 const startServer = async () => {
-  try{
+  try {
     await connectDB(process.env.MONGO_URL);
-    app.listen(port, () => console.log(`app is now listeing at port ${port}`))
+    app.listen(port, () => console.log(`app is now listeing at port ${port}`));
   } catch (err) {
     console.error(err);
   }
-}
+};
 
 startServer();
