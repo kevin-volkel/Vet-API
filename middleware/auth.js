@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
+const { UnauthError } = require("../errors");
 require("dotenv").config();
 
 module.exports = async (req, res, next) => {
   const header = req.headers.authorization;
-  if (!header || !header.startsWith("Bearer")) {
-    // Throw unauthentication error
+  if (!header || !header.startsWith("Bearer ")) {
+    throw new UnauthError
   }
   const token = header.split(" ")[1];
 
@@ -13,6 +14,6 @@ module.exports = async (req, res, next) => {
     req.user = { userID: payload.userID, name: payload.name };
     next();
   } catch (err) {
-    // Throw unauthentication error
+    throw new UnauthError
   }
 };
