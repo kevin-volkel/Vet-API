@@ -5,6 +5,6 @@ const { login, register, updatePermissions } = require('../controllers/auth');
 
 router.route('/register').post(register);
 router.route('/login').post(login);
-router.route('/').put(updatePermissions);
+router.route('/:id').put(updatePermissions);
 
-module.exports = router
+module.exports = router;
