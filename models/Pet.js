@@ -11,7 +11,7 @@ const PetSchema = new mongoose.Schema(
     age: {
       type: String,
       required: [true, 'Please provide an age'],
-      match: [/[\d] (days||weeks||months||years)/g, 'Age formatted wrong']
+      match: [/[\d] (day||days||week||weeks||month||months||year||years)/g, 'Age formatted wrong']
     },
     gender: {
       type: String,
@@ -33,7 +33,7 @@ const PetSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, 'Please provide a description'],
-      minlength: [5, 'The description must be at least 5 characters long'],
+      minlength: [3, 'The description must be at least 5 characters long'],
     },
     extraInfo: {
       type: String
