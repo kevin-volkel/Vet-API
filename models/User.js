@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: [true, 'Please enter a name'],
     maxlength: [50, 'Name must be under 50 characters'],
@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
       default: 'user'
     }
   }
-}).pre('save', async function() {
+}).pre('save', async function(next) {
   this.password = await bcrypt.hash(this.password, bcrypt.genSaltSync())
   next();
 })

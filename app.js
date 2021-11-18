@@ -22,7 +22,7 @@ const adoptedRouter = require('./routes/adopted');
 //! Middleware
 const auth = require('./middleware/auth')
 // const errorHandler = require('./middleware/errorHandler')
-const notFound = require('./middleware/notFound')
+const notFound = require('./middleware/not-found')
 
 //! SwaggerUI
 // const swaggerUI = require('swagger-ui-express')
