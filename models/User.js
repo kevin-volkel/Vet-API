@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema({
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,
       'Please enter a valid email address',
     ],
+    lowercase: true
   },
   password: {
     type: String,

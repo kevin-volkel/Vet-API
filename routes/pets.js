@@ -7,9 +7,10 @@ const {
   removePet,
   getPet,
   getPets,
+  clearPets
 } = require('../controllers/pets');
 
-router.route('/').post(postPet).get(getPets);
+router.route('/').post(postPet).get(getPets).delete(clearPets)
 router.route('/:id').get(getPet).delete(removePet).put(updatePet);
 
 module.exports = router;

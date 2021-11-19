@@ -37,9 +37,22 @@ const PetSchema = new mongoose.Schema(
     },
     extraInfo: {
       type: String
-    }
+    },
+    hourAge: {
+      type: Number,
+    } 
   },
   {timestamps: true}
-)
+).pre('save', async function () {
+  const conversions = {
+    'year' : 8760,
+    'month' : 730,
+    'week' : 168,
+    'day' : 24
+  }
+  let [ageNum, ageUnit] = this.age.split(' ')
+  if(ageUnit.includes('s')) ageUnit = ageUnit.substring(0, ageUnit.length - 1)
+  this.hourAge = conversions[ageUnit] * ageNum
+})
 
 module.exports = mongoose.model('Pet', PetSchema)

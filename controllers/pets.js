@@ -38,20 +38,50 @@ const removePet = async (req, res) => {
 
 //! Get a single pet
 const getPet = async (req, res) => {
+  
   const { id } = req.params;
-  const pet = await Pet.findById(id)
+  const pets = await Pet.findById(id)
   if(!pet){
     throw new BadRequestError("Could not find a pet with the given ID")
   }
-  res.status(StatusCodes.OK).json(pet)
+  res.status(StatusCodes.OK).json(pets)
 };
 
 //! Get a list of pets with various filters
 const getPets = async (req, res) => {
-  const pets = await Pet.find({});
+  const { name, age, gender, species } = req.query;
+  
+  const queryObject = {};
+  if(name) queryObject.name = { $regex: name, $options: 'i'}
+  if(species) queryObject.species = { $regex: species, $options: 'i'}
+  if(gender) queryObject.gender = gender;
+  if (age) {
+    const operatorMap = {
+      '>': '$gt',
+      '>=': '$gte',
+      '=': '$eq',
+      '<=': '$lte',
+      '<': '$lt',
+    };
+    const re = /\b(<|>|<=|=|>=)\b/g;
+    
+    let newFilters = age.replace(re, (match) => `-${operatorMap[match]}-`);
+    newFilters.split(',').forEach((item) => {
+      const [field, operator, value] = item.split('-');
+      queryObject['hourAge'] = { [operator]: Number(value) };
+    });
+  }
+  
+  let pets = await Pet.find(queryObject);
+  
   if (!pets) {
     throw new NotFoundError('No results found');
   }
   res.status(StatusCodes.OK).json(pets);
 };
-module.exports = { postPet, updatePet, removePet, getPet, getPets };
+
+const clearPets = async (req, res) => {
+  const pets = await Pet.deleteMany({})
+  res.status(200).json(pets)
+}
+module.exports = { postPet, updatePet, removePet, getPet, getPets, clearPets };
