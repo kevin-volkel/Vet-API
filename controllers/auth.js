@@ -28,8 +28,30 @@ const register = async (req, res) => {
   res.json({ user: { name: newUser.username }, token });
 };
 
-const updatePermissions = (req, res) => {
+const updatePermissions = async (req, res) => {
   const curUser = req.user;
+  const curUserID = req.user.id;
+  const { id: paramID } = req.params;
+
+  const userObject = await User.findOne({ paramID });
+  if (
+    curUser.permissions !== 'teacher' ||
+    curUser.permissions !== 'moderator'
+  ) {
+    const reqPerm = req.body.permissions;
+    if (reqPerm) {
+      if (userObject.permissions !== reqPerm) {
+        throw new UnauthError(
+          'You do not have permissions to change permissions.'
+        );
+      }
+    }
+    if (curUserID !== paramID) {
+      throw new UnauthError(
+        `You do not have permissions to change that user's information.`
+      );
+    }
+  }
 };
 
 module.exports = { login, register, updatePermissions };
