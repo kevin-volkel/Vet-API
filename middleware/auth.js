@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
 
   try {
     payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { userID: payload.userID, name: payload.name };
+    req.user = { userID: payload.userID, username: payload.username, permission: payload.permission };
     next();
   } catch (err) {
     throw new UnauthError

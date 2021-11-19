@@ -53,7 +53,7 @@ app
   .use('/api/v1/requests', auth, requestsRouter)
   .use('/api/v1/pets', auth, petsRouter)
   .use('/api/v1/adopted', auth, adoptedRouter)
-  .use(notFound);
+  // .use(notFound);
 // .use(errorHandler)
 
 const startServer = async () => {
