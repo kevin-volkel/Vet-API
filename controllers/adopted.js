@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const { StatusCodes } = require("https-status-codes");
+const { StatusCodes } = require("http-status-codes");
 
-const { Adopted } = require("./models");
+const { Adopted } = require("../models");
 
 const getAdopted = (req, res) => {
   res.json({ msg: "Gonna", status: 200 });

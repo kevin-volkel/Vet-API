@@ -3,8 +3,9 @@ const { StatusCodes } = require("http-status-codes");
 
 const { Request } = require("../models");
 const { BadRequestError, NotFoundError } = require("../errors");
+const { findByIdAndDelete } = require("../models/User");
 
-const findRequestById = (req) => {
+const findRequestById = async (req) => {
   const { id: requestId } = await req.params;
   const request = Request.findById({
     _id: requestId
@@ -17,40 +18,37 @@ const findRequestById = (req) => {
 };
 
 const getRequest = async (req, res) => {
-  const request = findRequestById(req);
+  const request = await findRequestById(req);
 
   res.status(200).json({ request });
 };
+
 const getAllRequests = async (req, res) => {
-  const requests = await Request.sort("adoptee");
+  const adopted = await Request.find({});
   res.status(StatusCodes.OK).json({ adopted, count: adopted.length });
 };
+
 const postRequest = async (req, res) => {
-  const request = await req.body;
+  const request = await Request.create(req.body);
   res.status(StatusCodes.CREATED).json({ request });
 };
 const removeRequest = async (req, res) => {
-  const request = findRequestById(req);
+  // const request = findRequestById(req);
+  const request = await Request.findByIdAndDelete(req.params.id)
 
   res.status(200).json({ request });
 };
 const updateRequest = async (req, res) => {
   const {
-    body: { petID: petId, status },
-    user: { userID: userId },
     params: { id: requestId }
   } = req;
-  if (!petId || !status) {
-    throw new BadRequestError("Pet ID and status required");
-  }
-  if (!requestId) {
-    throw new NotFoundError(`No request of id ${requestId}`);
-  }
-
-  const request = await Request.findByIdAndUpdate({ id: requestId }, req.body, {
+  const request = await Request.findByIdAndUpdate(requestId, req.body, {
     new: true,
     runValidators: true
   });
+  if (!request) {
+    throw new NotFoundError(`No request found with ID of :${requestId}`);
+  }
 
   res.status(200).json({ request });
 };
