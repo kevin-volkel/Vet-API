@@ -1,20 +1,24 @@
-const mongoose = require('mongoose');
-const { StatusCodes } = require('http-status-codes');
+const mongoose = require("mongoose");
+const { StatusCodes } = require("http-status-codes");
 
-const { Request } = require('../models');
-const { BadRequestError, NotFoundError } = require('../errors');
-const { findByIdAndDelete } = require('../models/User');
+const { Request } = require("../models");
+const { NotFoundError, UnauthError } = require("../errors");
 
 const findRequestById = async (req) => {
   const { id: requestId } = await req.params;
   const request = Request.findById({
-    _id: requestId,
+    _id: requestId
   });
   if (!request) {
     throw new NotFoundError(`No request of id ${requestId}`);
   }
 
   return request;
+};
+const checkPermissionIsUser = async (req) => {
+  if (req.user.permission === "user") {
+    throw new UnauthError("Permission denied");
+  }
 };
 
 const getRequest = async (req, res) => {
@@ -29,25 +33,28 @@ const getAllRequests = async (req, res) => {
 };
 
 const postRequest = async (req, res) => {
+  await checkPermissionIsUser(req);
   const request = await Request.create(req.body);
   res.status(StatusCodes.CREATED).json({ request });
 };
 const removeRequest = async (req, res) => {
+  await checkPermissionIsUser(req);
   // const request = findRequestById(req);
   const request = await Request.findByIdAndDelete(req.params.id);
 
   res.status(200).json({ request });
 };
 const updateRequest = async (req, res) => {
+  await checkPermissionIsUser(req);
   const {
-    params: { id: requestId },
+    params: { id: requestId }
   } = req;
   const request = await Request.findByIdAndUpdate(requestId, req.body, {
     new: true,
-    runValidators: true,
+    runValidators: true
   });
   if (!request) {
-    throw new NotFoundError(`No request found with ID of :${requestId}`);
+    throw new NotFoundError(`No request of id ${requestId}`);
   }
 
   res.status(200).json({ request });
@@ -58,5 +65,5 @@ module.exports = {
   getRequest,
   getAllRequests,
   removeRequest,
-  updateRequest,
+  updateRequest
 };
