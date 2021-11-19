@@ -19,5 +19,19 @@
   },
   "scripts": {
     "start": "node app.js"
-  }
+  },
+  "name": "vet-api",
+  "description": "",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theKevinator900/Vet-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theKevinator900/Vet-API/issues"
+  },
+  "homepage": "https://github.com/theKevinator900/Vet-API#readme"
 }
