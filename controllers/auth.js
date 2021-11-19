@@ -19,7 +19,7 @@ const login = async (req, res) => {
     throw new UnauthError('Incorrect Email or Password');
   }
   const token = userLogin.createJWT();
-  res.json({ user: { name: userLogin.username }, token });
+  res.json({ user: { name: userLogin.username, id: userLogin._id }, token });
 };
 
 const register = async (req, res) => {

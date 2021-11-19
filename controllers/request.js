@@ -2,34 +2,57 @@ const mongoose = require('mongoose');
 const { StatusCodes } = require('http-status-codes');
 
 const { Request } = require('../models');
-const { NotFoundError } = require('../errors');
+const { BadRequestError, NotFoundError } = require('../errors');
+const { findByIdAndDelete } = require('../models/User');
 
-const getRequest = async (req, res) => {
+const findRequestById = async (req) => {
   const { id: requestId } = await req.params;
-  const request = Request.findOne({
+  const request = Request.findById({
     _id: requestId,
   });
+  if (!request) {
+    throw new NotFoundError(`No request of id ${requestId}`);
+  }
 
-  if (!job) {
-    throw new NotFoundError(`Request of id ${requestId} not found`);
+  return request;
+};
+
+const getRequest = async (req, res) => {
+  const request = await findRequestById(req);
+
+  res.status(200).json({ request });
+};
+
+const getAllRequests = async (req, res) => {
+  const adopted = await Request.find({});
+  res.status(StatusCodes.OK).json({ adopted, count: adopted.length });
+};
+
+const postRequest = async (req, res) => {
+  const request = await Request.create(req.body);
+  res.status(StatusCodes.CREATED).json({ request });
+};
+const removeRequest = async (req, res) => {
+  // const request = findRequestById(req);
+  const request = await Request.findByIdAndDelete(req.params.id);
+
+  res.status(200).json({ request });
+};
+const updateRequest = async (req, res) => {
+  const {
+    params: { id: requestId },
+  } = req;
+  const request = await Request.findByIdAndUpdate(requestId, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  if (!request) {
+    throw new NotFoundError(`No request found with ID of :${requestId}`);
   }
 
   res.status(200).json({ request });
 };
-const getAllRequests = async (req, res) => {
-  const requests = await Request.sort('adoptee');
-  res.status(StatusCodes.OK).json({ adopted, count: adopted.length });
-};
-const postRequest = async (req, res) => {
-  const request = await req.body;
-  res.status(StatusCodes.CREATED).json({ request });
-};
-const removeRequest = (req, res) => {
-  res.json({ msg: 'Me', status: 200 });
-};
-const updateRequest = (req, res) => {
-  res.json({ msg: 'The', status: 200 });
-};
+
 module.exports = {
   postRequest,
   getRequest,
