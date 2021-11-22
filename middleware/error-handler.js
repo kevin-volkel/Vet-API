@@ -1,9 +1,9 @@
-const { httpStatusCodes } = require("http-status-codes");
+const { StatusCodes } = require("http-status-codes");
 
 module.exports = (err, req, res, next) => {
   // Default
   let returnError = {
-    statusCode: err.statusCode || httpStatusCodes.INTERNAL_SERVER_ERROR,
+    statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || "Oops, something went wrong"
   };
 

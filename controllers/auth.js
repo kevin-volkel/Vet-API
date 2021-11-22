@@ -75,4 +75,21 @@ const getUsers = async (req, res) => {
   res.status(200).json(users)
 }
 
-module.exports = { login, register, updateUser, getUsers };
+const deleteUser = async (req, res) => {
+  const { permission } = req.user;
+  const { id } = req.params;
+
+  if (permission === 'user') {
+    throw new UnauthError('You are not authorized to do this');
+  }
+
+  const user = await User.findByIdAndDelete(id);
+
+  if (!user) {
+    throw new BadRequestError('Could not find a user with the given ID');
+  }
+
+  res.status(StatusCodes.OK).json(user);
+};
+
+module.exports = { login, register, updateUser, getUsers, deleteUser };
