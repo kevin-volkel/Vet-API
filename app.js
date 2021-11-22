@@ -46,7 +46,7 @@ app
   .use(cors())
   .use(xss())
   .get('/', (req, res) => {
-    res.send('<h1> Welcome to the site </h1>');
+    res.send('<h1> Welcome to the site </h1> <a href="/api/docs"> Documentation </a>');
   })
   .use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
   .use('/api/v1/auth', authRouter)
