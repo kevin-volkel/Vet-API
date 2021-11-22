@@ -5,7 +5,7 @@ const { Adopted } = require("../models");
 
 const findAdoptedById = async (req) => {
   const { id: adoptedId } = await req.params;
-  const adopted = Request.findById({
+  const adopted = Adopted.findById({
     _id: adoptedId
   });
   if (!adopted) {
@@ -35,8 +35,8 @@ const postAdopted = async (req, res) => {
 };
 const removeAdopted = async (req, res) => {
   await checkPermissionIsUser(req);
-  const adopted = Adopted.findByIdAndDelete(req.params.id);
-  res.status(200).json({ request });
+  const adopted = await Adopted.findByIdAndDelete(req.params.id);
+  res.status(200).json({ adopted });
 };
 const updateAdopted = async (req, res) => {
   await checkPermissionIsUser(req);

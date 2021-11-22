@@ -70,4 +70,9 @@ const updateUser = async (req, res) => {
   res.json(updatedUser);
 };
 
-module.exports = { login, register, updateUser };
+const getUsers = async (req, res) => {
+  const users = await User.find({})
+  res.status(200).json(users)
+}
+
+module.exports = { login, register, updateUser, getUsers };

@@ -5,22 +5,11 @@ const AdoptedSchema = new mongoose.Schema(
     carer: {
       ref: "User",
       type: mongoose.Types.ObjectId,
-      validate: {
-        validator: function (v) {
-          return v.permission === "student";
-        },
-        message: "User is not a student"
-      },
       required: [true, "need a carer"]
     },
     owner: {
       ref: "User",
       type: mongoose.Types.ObjectId,
-      validate: {
-        validator: function (v) {
-          return v.permission === "user";
-        }
-      },
       required: [true, "need an owner"]
     },
     adoptee: {

@@ -21,7 +21,7 @@ const adoptedRouter = require('./routes/adopted');
 
 //! Middleware
 const auth = require('./middleware/auth');
-// const errorHandler = require('./middleware/errorHandler')
+const errorHandler = require('./middleware/error-handler')
 const notFound = require('./middleware/not-found');
 
 //! SwaggerUI
@@ -53,7 +53,7 @@ app
   .use('/api/v1/requests', auth, requestsRouter)
   .use('/api/v1/pets', auth, petsRouter)
   .use('/api/v1/adopted', auth, adoptedRouter)
-  // .use(notFound);
+  .use(notFound);
 // .use(errorHandler)
 
 const startServer = async () => {
