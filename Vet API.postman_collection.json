@@ -1,0 +1,670 @@
+{
+	"info": {
+		"_postman_id": "459def18-fe95-45e8-9b4f-ad79e0801b27",
+		"name": "Vet API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"Kevinstu\",\r\n    \"email\" : \"kevinstu@gmail.com\",\r\n    \"password\": \"password1\",\r\n    \"permission\": \"student\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AUTH_URL}}/register",
+							"host": [
+								"{{AUTH_URL}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"\r",
+									"pm.globals.set(\"AuthToken\", jsonData.token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"kevinstu@gmail.com\",\r\n    \"password\": \"password1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AUTH_URL}}/login",
+							"host": [
+								"{{AUTH_URL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{AUTH_URL}}/",
+							"host": [
+								"{{AUTH_URL}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"KevinStudent\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{AUTH_URL}}/:id",
+							"host": [
+								"{{AUTH_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "619c01c44381cac63de3733a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pets",
+			"item": [
+				{
+					"name": "Post Pet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Sparky\",\r\n    \"age\" : \"3 years\",\r\n    \"gender\" : \"male\",\r\n    \"species\" : \"cat\",\r\n    \"image\" : \"no\",\r\n    \"description\" : \"He's a good cat\",\r\n    \"extraInfo\" : \"It's a cat. That's all\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PETS_URL}}/",
+							"host": [
+								"{{PETS_URL}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{PETS_URL}}/",
+							"host": [
+								"{{PETS_URL}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "species",
+									"value": "dog",
+									"description": "Defines any matching string or substring",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "female",
+									"description": "Accepts \"male\" or \"female\"",
+									"disabled": true
+								},
+								{
+									"key": "age",
+									"value": ">48",
+									"description": "Accepts \"<\", \"<=\", \"=\", \">\", \">=\" then a number in hours",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "name,age,species",
+									"description": "Accepts any field {species, name, gender, hourAge}. Add \"-\" to reverse the sort.",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "Blub",
+									"description": "Defines any matching string or substring",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pet",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{PETS_URL}}/:id",
+							"host": [
+								"{{PETS_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "619822cc23b5fbc9d9927bcb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Pet",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{PETS_URL}}/:id",
+							"host": [
+								"{{PETS_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "619822cc23b5fbc9d9927bcb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear Pets",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{PETS_URL}}/",
+							"host": [
+								"{{PETS_URL}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pet",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"species\" : \"dog\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PETS_URL}}/:id",
+							"host": [
+								"{{PETS_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "619bfe7c36cb5f6ade23bce2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requests",
+			"item": [
+				{
+					"name": "Post Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userID\": \"6196cfc984a3d4962e68217f\",\r\n    \"petID\": \"6196d2ec842c9ee45e0a0bfa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{REQUESTS_URL}}/",
+							"host": [
+								"{{REQUESTS_URL}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Requests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{REQUESTS_URL}}/",
+							"host": [
+								"{{REQUESTS_URL}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Request",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{REQUESTS_URL}}/:id",
+							"host": [
+								"{{REQUESTS_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "61980eeaf7f3dddd5917b691"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Request",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{REQUESTS_URL}}/:id",
+							"host": [
+								"{{REQUESTS_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "61980eeaf7f3dddd5917b691"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Request",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"petID\":\"61980fd7e113c9b33ed88837\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{REQUESTS_URL}}/:id",
+							"host": [
+								"{{REQUESTS_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "61980eeaf7f3dddd5917b691"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Adopted",
+			"item": [
+				{
+					"name": "Get Adopted",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{ADOPTED_URL}}/:id",
+							"host": [
+								"{{ADOPTED_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "619c02876bda20c6e1c01220"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Adopted",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ADOPTED_URL}}/",
+							"host": [
+								"{{ADOPTED_URL}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Adopted",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carer\" : \"619c01c44381cac63de3733a\",\r\n    \"owner\" : \"6196cd35160e323a575803ac\" ,\r\n    \"adoptee\" : \"619bfa8e5360613bcf576e2b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADOPTED_URL}}/",
+							"host": [
+								"{{ADOPTED_URL}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Adopted",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ADOPTED_URL}}/:id",
+							"host": [
+								"{{ADOPTED_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "619c02876bda20c6e1c01220"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Adopted",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{AuthToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carer\" : \"619bfe4c36cb5f6ade23bcdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADOPTED_URL}}/:id",
+							"host": [
+								"{{ADOPTED_URL}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "619c02876bda20c6e1c01220"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

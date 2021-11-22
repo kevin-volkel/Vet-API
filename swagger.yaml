@@ -1,0 +1,560 @@
+openapi: 3.0.0
+info:
+  title: Vet API
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://vet-api-jik.herokuapp.com/api/v1
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+            example:
+              username: Kevinstu
+              email: kevinstu@gmail.com
+              password: password1
+              permission: student
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              email: kevinstu@gmail.com
+              password: password1
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/:
+    get:
+      tags:
+      - Auth
+      summary: Get Users
+      operationId: GetUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/{id}:
+    put:
+      tags:
+      - Auth
+      summary: Update User
+      operationId: UpdateUser
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 619c01c44381cac63de3733a
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+            example:
+              username: KevinStudent
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /pets/:
+    post:
+      tags:
+      - Pets
+      summary: Post Pet
+      operationId: PostPet
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostPetRequest'
+            example:
+              name: Sparky
+              age: 3 years
+              gender: male
+              species: cat
+              image: no
+              description: He's a good cat
+              extraInfo: It's a cat. That's all
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - Pets
+      summary: Get Pets
+      operationId: GetPets
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /pets/{id}:
+    get:
+      tags:
+      - Pets
+      summary: Get Pet
+      operationId: GetPet
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 619822cc23b5fbc9d9927bcb
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Pets
+      summary: Remove Pet
+      operationId: RemovePet
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 619822cc23b5fbc9d9927bcb
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+      - Pets
+      summary: Update Pet
+      description: yguijkojbuy8uij
+      operationId: UpdatePet
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 619bfe7c36cb5f6ade23bce2
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePetRequest'
+            example:
+              species: dog
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /requests/:
+    post:
+      tags:
+      - Requests
+      summary: Post Request
+      operationId: PostRequest
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequestRequest'
+            example:
+              userID: 6196cfc984a3d4962e68217f
+              petID: 6196d2ec842c9ee45e0a0bfa
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - Requests
+      summary: Get All Requests
+      operationId: GetAllRequests
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /requests/{id}:
+    get:
+      tags:
+      - Requests
+      summary: Get Request
+      operationId: GetRequest
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 61980eeaf7f3dddd5917b691
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Requests
+      summary: Remove Request
+      operationId: RemoveRequest
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 61980eeaf7f3dddd5917b691
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+      - Requests
+      summary: Update Request
+      operationId: UpdateRequest
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 61980eeaf7f3dddd5917b691
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRequestRequest'
+            example:
+              petID: 61980fd7e113c9b33ed88837
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /adopted/{id}:
+    get:
+      tags:
+      - Adopted
+      summary: Get Adopted
+      operationId: GetAdopted
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 619c02876bda20c6e1c01220
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Adopted
+      summary: Remove Adopted
+      operationId: RemoveAdopted
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 619c02876bda20c6e1c01220
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+      - Adopted
+      summary: Update Adopted
+      operationId: UpdateAdopted
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 619c02876bda20c6e1c01220
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAdoptedRequest'
+            example:
+              carer: 619bfe4c36cb5f6ade23bcdf
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /adopted/:
+    get:
+      tags:
+      - Adopted
+      summary: Get All Adopted
+      operationId: GetAllAdopted
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - Adopted
+      summary: Post Adopted
+      operationId: PostAdopted
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostAdoptedRequest'
+            example:
+              carer: 619c01c44381cac63de3733a
+              owner: 6196cd35160e323a575803ac
+              adoptee: 619bfa8e5360613bcf576e2b
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+      - username
+      - email
+      - password
+      - permission
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        permission:
+          type: string
+      example:
+        username: Kevinstu
+        email: kevinstu@gmail.com
+        password: password1
+        permission: student
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: kevinstu@gmail.com
+        password: password1
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      required:
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+      example:
+        username: KevinStudent
+    PostPetRequest:
+      title: PostPetRequest
+      required:
+      - name
+      - age
+      - gender
+      - species
+      - image
+      - description
+      - extraInfo
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: string
+        gender:
+          type: string
+        species:
+          type: string
+        image:
+          type: string
+        description:
+          type: string
+        extraInfo:
+          type: string
+      example:
+        name: Sparky
+        age: 3 years
+        gender: male
+        species: cat
+        image: no
+        description: He's a good cat
+        extraInfo: It's a cat. That's all
+    UpdatePetRequest:
+      title: UpdatePetRequest
+      required:
+      - species
+      type: object
+      properties:
+        species:
+          type: string
+      example:
+        species: dog
+    PostRequestRequest:
+      title: PostRequestRequest
+      required:
+      - userID
+      - petID
+      type: object
+      properties:
+        userID:
+          type: string
+        petID:
+          type: string
+      example:
+        userID: 6196cfc984a3d4962e68217f
+        petID: 6196d2ec842c9ee45e0a0bfa
+    UpdateRequestRequest:
+      title: UpdateRequestRequest
+      required:
+      - petID
+      type: object
+      properties:
+        petID:
+          type: string
+      example:
+        petID: 61980fd7e113c9b33ed88837
+    PostAdoptedRequest:
+      title: PostAdoptedRequest
+      required:
+      - carer
+      - owner
+      - adoptee
+      type: object
+      properties:
+        carer:
+          type: string
+        owner:
+          type: string
+        adoptee:
+          type: string
+      example:
+        carer: 619c01c44381cac63de3733a
+        owner: 6196cd35160e323a575803ac
+        adoptee: 619bfa8e5360613bcf576e2b
+    UpdateAdoptedRequest:
+      title: UpdateAdoptedRequest
+      required:
+      - carer
+      type: object
+      properties:
+        carer:
+          type: string
+      example:
+        carer: 619bfe4c36cb5f6ade23bcdf
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+- httpBearer: []
+tags:
+- name: Auth
+- name: Pets
+- name: Requests
+- name: Adopted

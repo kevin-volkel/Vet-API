@@ -25,9 +25,9 @@ const errorHandler = require('./middleware/error-handler')
 const notFound = require('./middleware/not-found');
 
 //! SwaggerUI
-// const swaggerUI = require('swagger-ui-express')
-// const YAML = require('yamljs')
-// const swaggerDocs = YAML.load('./swagger.yaml ')
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs')
+const swaggerDocs = YAML.load('./swagger.yaml')
 
 //! Variable Declaration
 const port = process.env.PORT || 3000;
@@ -48,13 +48,13 @@ app
   .get('/', (req, res) => {
     res.send('<h1> Welcome to the site </h1>');
   })
-  // .use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
+  .use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
   .use('/api/v1/auth', authRouter)
   .use('/api/v1/requests', auth, requestsRouter)
   .use('/api/v1/pets', auth, petsRouter)
   .use('/api/v1/adopted', auth, adoptedRouter)
-  .use(notFound);
-// .use(errorHandler)
+  .use(notFound)
+  .use(errorHandler)
 
 const startServer = async () => {
   try {

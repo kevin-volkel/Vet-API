@@ -27,5 +27,5 @@ module.exports = (err, req, res, next) => {
     )} already exists`;
   }
 
-  return res.status(customError.statusCode).json({ msg: returnError, msg });
+  return res.status(returnError.statusCode).json({ msg: returnError.msg });
 };
