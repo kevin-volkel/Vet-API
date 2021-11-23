@@ -72,7 +72,7 @@ const updateUser = async (req, res) => {
 
 const getUsers = async (req, res) => {
 
-  if(req.user.permission === 'user'){
+  if(req.user.permission === 'user' || req.user.permission === "student"){
     throw new UnauthError('You are not authorized to do this')
   }
 
@@ -84,7 +84,7 @@ const deleteUser = async (req, res) => {
   const { permission } = req.user;
   const { id } = req.params;
 
-  if (permission === 'user') {
+  if (permission === 'user' || permission === 'student') {
     throw new UnauthError('You are not authorized to do this');
   }
 
