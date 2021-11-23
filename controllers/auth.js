@@ -71,6 +71,11 @@ const updateUser = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
+
+  if(req.user.permission === 'user'){
+    throw new UnauthError('You are not authorized to do this')
+  }
+
   const users = await User.find({})
   res.status(200).json(users)
 }

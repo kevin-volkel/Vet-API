@@ -21,17 +21,16 @@ paths:
             schema:
               $ref: '#/components/schemas/RegisterRequest'
             example:
-              username: Kevinstu
-              email: kevinstu@gmail.com
+              username: testModerator
+              email: moderator@gmail.com
               password: password1
-              permission: student
+              permission: moderator
         required: true
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-      security: []
   /auth/login:
     post:
       tags:
@@ -46,7 +45,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LoginRequest'
             example:
-              email: kevinstu@gmail.com
+              email: kevinmoder@gmail.com
               password: password1
         required: true
       responses:
@@ -54,7 +53,6 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-      security: []
   /auth/:
     get:
       tags:
@@ -96,6 +94,25 @@ paths:
           description: ''
           headers: {}
       deprecated: false
+    delete:
+      tags:
+      - Auth
+      summary: Delete User
+      operationId: DeleteUser
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: 619c15a21300d5bbcd5a0cef
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
   /pets/:
     post:
       tags:
@@ -110,13 +127,13 @@ paths:
             schema:
               $ref: '#/components/schemas/PostPetRequest'
             example:
-              name: Sparky
-              age: 3 years
-              gender: male
+              name: Emily
+              age: 7 weeks
+              gender: female
               species: cat
-              image: no
-              description: He's a good cat
-              extraInfo: It's a cat. That's all
+              image: none
+              description: Loud.
+              extraInfo: It's a cat.
         required: true
       responses:
         '200':
@@ -128,6 +145,17 @@ paths:
       - Pets
       summary: Get Pets
       operationId: GetPets
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Pets
+      summary: Clear Pets
+      operationId: ClearPets
       parameters: []
       responses:
         '200':
@@ -177,7 +205,6 @@ paths:
       tags:
       - Pets
       summary: Update Pet
-      description: yguijkojbuy8uij
       operationId: UpdatePet
       parameters:
       - name: id
@@ -187,7 +214,7 @@ paths:
         style: simple
         schema:
           type: string
-          example: 619bfe7c36cb5f6ade23bce2
+          example: 619c17d1177072bdd9cb7931
       requestBody:
         description: ''
         content:
@@ -195,7 +222,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdatePetRequest'
             example:
-              species: dog
+              extraInfo: It's a cat.
         required: true
       responses:
         '200':
@@ -216,8 +243,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PostRequestRequest'
             example:
-              userID: 6196cfc984a3d4962e68217f
-              petID: 6196d2ec842c9ee45e0a0bfa
+              userID: 619c16b5177072bdd9cb7922
+              petID: 619c17d1177072bdd9cb7931
         required: true
       responses:
         '200':
@@ -394,9 +421,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PostAdoptedRequest'
             example:
-              carer: 619c01c44381cac63de3733a
-              owner: 6196cd35160e323a575803ac
-              adoptee: 619bfa8e5360613bcf576e2b
+              carer: 619c16ac177072bdd9cb7920
+              owner: 619c16b5177072bdd9cb7922
+              adoptee: 619c17a6177072bdd9cb792f
         required: true
       responses:
         '200':
@@ -423,10 +450,10 @@ components:
         permission:
           type: string
       example:
-        username: Kevinstu
-        email: kevinstu@gmail.com
+        username: testModerator
+        email: moderator@gmail.com
         password: password1
-        permission: student
+        permission: moderator
     LoginRequest:
       title: LoginRequest
       required:
@@ -439,7 +466,7 @@ components:
         password:
           type: string
       example:
-        email: kevinstu@gmail.com
+        email: kevinmoder@gmail.com
         password: password1
     UpdateUserRequest:
       title: UpdateUserRequest
@@ -478,23 +505,23 @@ components:
         extraInfo:
           type: string
       example:
-        name: Sparky
-        age: 3 years
-        gender: male
+        name: Emily
+        age: 7 weeks
+        gender: female
         species: cat
-        image: no
-        description: He's a good cat
-        extraInfo: It's a cat. That's all
+        image: none
+        description: Loud.
+        extraInfo: It's a cat.
     UpdatePetRequest:
       title: UpdatePetRequest
       required:
-      - species
+      - extraInfo
       type: object
       properties:
-        species:
+        extraInfo:
           type: string
       example:
-        species: dog
+        extraInfo: It's a cat.
     PostRequestRequest:
       title: PostRequestRequest
       required:
@@ -507,8 +534,8 @@ components:
         petID:
           type: string
       example:
-        userID: 6196cfc984a3d4962e68217f
-        petID: 6196d2ec842c9ee45e0a0bfa
+        userID: 619c16b5177072bdd9cb7922
+        petID: 619c17d1177072bdd9cb7931
     UpdateRequestRequest:
       title: UpdateRequestRequest
       required:
@@ -534,9 +561,9 @@ components:
         adoptee:
           type: string
       example:
-        carer: 619c01c44381cac63de3733a
-        owner: 6196cd35160e323a575803ac
-        adoptee: 619bfa8e5360613bcf576e2b
+        carer: 619c16ac177072bdd9cb7920
+        owner: 619c16b5177072bdd9cb7922
+        adoptee: 619c17a6177072bdd9cb792f
     UpdateAdoptedRequest:
       title: UpdateAdoptedRequest
       required:
